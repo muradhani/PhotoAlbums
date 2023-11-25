@@ -13,7 +13,10 @@
         <action
             android:id="@+id/action_profileFragment_to_albumsFragment"
             app:destination="@id/albumsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim" />
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@android:anim/fade_in"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/albumsFragment"

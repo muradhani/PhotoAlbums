@@ -22,10 +22,18 @@ import com.example.useralbums.ui.base.BaseAdapter
 import com.example.useralbums.ui.base.BaseFragment
 import com.example.useralbums.ui.viewmodels.ProfileFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileFragmentViewModel>(),AlbumListener{
     private val adapter: AlbumsAdapter by lazy { AlbumsAdapter(emptyList(), this) }
+    private var scope: CoroutineScope? = null
     override fun createViewModel(): ProfileFragmentViewModel {
         return ViewModelProvider(this).get(ProfileFragmentViewModel::class.java)
 
@@ -64,10 +72,25 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileFragmentView
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onResume() {
+        super.onResume()
+        if (scope == null || scope?.isActive == false) {
+            scope = CoroutineScope(Dispatchers.Main + Job())
+            scope?.launch {
+                viewModel.getRandomUser()
+            }
+        }
     }
 
+    override fun onPause() {
+        super.onPause()
+        scope?.cancel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope?.cancel()
+    }
     override fun onAlbumClicked(album: AlbumsResponseItem) {
 //        val action = ProfileFragmentDirections.actionProfileFragmentToAlbumsFragment(album.id,album.title)
 //        Navigation.findNavController(requireView()).navigate(action)

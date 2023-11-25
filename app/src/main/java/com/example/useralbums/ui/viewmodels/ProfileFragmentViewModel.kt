@@ -37,7 +37,8 @@ class ProfileFragmentViewModel @Inject constructor(
         }
     }
     suspend fun getRandomUser(){
-        getUserUseCase(1).collect{
+        val randomUserId = (1..10).random()
+        getUserUseCase(randomUserId).collect{
             withContext(Dispatchers.Main){
                 _user.postValue(it)
             }

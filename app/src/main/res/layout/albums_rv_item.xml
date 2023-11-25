@@ -13,15 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingVertical="@dimen/_8sdp"
         android:background="?android:attr/selectableItemBackground"
-        android:clickable="true">
-
+        android:clickable="true"
+        >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:background="@color/grey" />
         <TextView
             android:id="@+id/album_name_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_15sdp"
             android:text="@{name}"
             tools:text="test"
            />

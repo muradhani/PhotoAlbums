@@ -6,8 +6,9 @@ import com.example.useralbums.data.Dto.albums.AlbumsResponseItem
 import com.example.useralbums.databinding.AlbumsRvItemBinding
 import com.example.useralbums.ui.base.BaseAdapter
 import com.example.useralbums.ui.base.BaseViewHolder
+import javax.inject.Inject
 
-class AlbumsAdapter(
+class AlbumsAdapter @Inject constructor(
     private val list : List<AlbumsResponseItem>,
     private val albumListener: AlbumListener
 ):BaseAdapter<AlbumsRvItemBinding,AlbumsResponseItem>(list) {

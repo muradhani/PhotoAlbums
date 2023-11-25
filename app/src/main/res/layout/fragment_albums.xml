@@ -17,7 +17,8 @@
            <com.google.android.material.appbar.AppBarLayout
                android:id="@+id/appbar"
                android:layout_width="match_parent"
-               android:layout_height="wrap_content">
+               android:layout_height="wrap_content"
+               android:background="@color/white">
 
                <androidx.appcompat.widget.Toolbar
                    android:id="@+id/toolbar"
@@ -39,7 +40,10 @@
                    android:layout_width="match_parent"
                    android:layout_height="@dimen/_40sdp"
                    android:hint="Search in images"
-                   android:drawableStart="@drawable/ic_search" />
+                   android:drawableStart="@drawable/ic_search"
+                   android:drawablePadding="@dimen/_4sdp"
+                   android:background="@drawable/edit_text_style"
+                   android:paddingHorizontal="@dimen/_6sdp"/>
                <androidx.recyclerview.widget.RecyclerView
                    android:id="@+id/photos_rv"
                    android:layout_width="match_parent"
