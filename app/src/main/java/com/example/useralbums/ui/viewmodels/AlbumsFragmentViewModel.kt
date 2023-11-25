@@ -10,14 +10,19 @@ import com.example.useralbums.data.Dto.photos.PhotosResponseItem
 import com.example.useralbums.domain.models.State
 import com.example.useralbums.domain.useCase.GetPhotosUseCase
 import com.example.useralbums.domain.useCase.SearchPhotosUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AlbumsFragmentViewModel:ViewModel() {
+@HiltViewModel
+class AlbumsFragmentViewModel @Inject constructor(
+    val getPhotosUseCase :GetPhotosUseCase,
+    val searchPhotosUseCase : SearchPhotosUseCase
+):ViewModel() {
     private val _photos = MutableLiveData<State<List<PhotosResponseItem>>>()
     val photos : LiveData<State<List<PhotosResponseItem>>> = _photos
-    val getPhotosUseCase = GetPhotosUseCase()
-    val searchPhotosUseCase = SearchPhotosUseCase()
+
     fun getPhotos(albumId: Int, context: Context?){
         viewModelScope.launch(Dispatchers.IO) {
             try {

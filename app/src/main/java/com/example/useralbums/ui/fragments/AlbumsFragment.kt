@@ -21,8 +21,9 @@ import com.example.useralbums.ui.adapter.PhotoListener
 import com.example.useralbums.ui.adapter.PhotosAdapter
 import com.example.useralbums.ui.base.BaseFragment
 import com.example.useralbums.ui.viewmodels.AlbumsFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, AlbumsFragmentViewModel>() ,PhotoListener{
     val args:AlbumsFragmentArgs by navArgs()
     private val adapter: PhotosAdapter by lazy { PhotosAdapter(emptyList(), this) }

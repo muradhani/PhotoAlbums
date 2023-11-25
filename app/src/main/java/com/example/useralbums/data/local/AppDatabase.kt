@@ -10,22 +10,22 @@ import com.example.useralbums.data.Dto.photos.PhotosResponseItem
 abstract class AppDatabase:RoomDatabase() {
     abstract fun photoDao(): PhotoDao
 
-    companion object {
-        @Volatile
-        var INSTANCE: AppDatabase? = null
-
-        fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
-            }
-        }
-
-        private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "app_database"
-            ).build()
-        }
-    }
+//    companion object {
+//        @Volatile
+//        var INSTANCE: AppDatabase? = null
+//
+//        fun getInstance(context: Context): AppDatabase {
+//            return INSTANCE ?: synchronized(this) {
+//                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+//            }
+//        }
+//
+//        private fun buildDatabase(context: Context): AppDatabase {
+//            return Room.databaseBuilder(
+//                context.applicationContext,
+//                AppDatabase::class.java,
+//                "app_database"
+//            ).build()
+//        }
+//    }
 }

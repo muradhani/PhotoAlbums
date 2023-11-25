@@ -21,10 +21,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
-class ProfileFragmentViewModel :ViewModel(){
-    private val getUserUseCase: GetUserUseCase = GetUserUseCase()
-    private val getAlbumUseCase: GetAlbumUseCase = GetAlbumUseCase()
+@HiltViewModel
+class ProfileFragmentViewModel @Inject constructor(
+    private val getUserUseCase: GetUserUseCase,
+    private val getAlbumUseCase: GetAlbumUseCase,
+):ViewModel(){
     private val _albumsList = MutableLiveData<State<List<AlbumsResponseItem>>>()
     val albumList : LiveData<State<List<AlbumsResponseItem>>> = _albumsList
 

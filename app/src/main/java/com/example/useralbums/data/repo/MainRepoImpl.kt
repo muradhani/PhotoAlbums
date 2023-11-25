@@ -13,11 +13,15 @@ import com.example.useralbums.domain.models.User
 import com.example.useralbums.domain.repo.MainRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MainRepoImpl():MainRepo {
-    private val apiService: ApiService = RetrofitClient.getClient()
-    private val mapper: UserMapper = UserMapper()
-
+@Singleton
+class MainRepoImpl @Inject constructor(
+    private val apiService: ApiService ,
+    private val photoDao : PhotoDao,
+    private val mapper: UserMapper
+):MainRepo {
     override suspend fun getUser(userid:Int): Flow<State<User>>{
         return flow {
             emit(State.Loading)
@@ -52,7 +56,7 @@ class MainRepoImpl():MainRepo {
         return flow {
 // Emit loading state
             emit(State.Loading)
-            val photoDao : PhotoDao = AppDatabase.getInstance(context).photoDao()
+            //val photoDao : PhotoDao = AppDatabase.getInstance(context).photoDao()
             photoDao.deleteAll()
             try {
                 // 1. Fetch photos from the API
@@ -84,7 +88,7 @@ class MainRepoImpl():MainRepo {
     suspend fun photosearch(title: String, context: Context?):Flow<State<List<PhotosResponseItem>>>{
         return flow {
             // Emit loading state
-            val photoDao : PhotoDao = AppDatabase.getInstance(context!!).photoDao()
+            //val photoDao : PhotoDao = AppDatabase.getInstance(context!!).photoDao()
             emit(State.Loading)
 
             try {

@@ -23,7 +23,7 @@ import com.example.useralbums.ui.base.BaseFragment
 import com.example.useralbums.ui.viewmodels.ProfileFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileFragmentViewModel>(),AlbumListener{
     private val adapter: AlbumsAdapter by lazy { AlbumsAdapter(emptyList(), this) }
     override fun createViewModel(): ProfileFragmentViewModel {
