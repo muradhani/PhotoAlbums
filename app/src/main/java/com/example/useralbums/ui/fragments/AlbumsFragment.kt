@@ -11,6 +11,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.useralbums.R
 import com.example.useralbums.data.Dto.albums.AlbumsResponseItem
@@ -38,16 +39,29 @@ class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, AlbumsFragmentViewMod
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        backStack()
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             photosRv.adapter = adapter
             toolbar.title = args.albumName
         }
-        Log.i("main",args.albumId.toString())
         viewModel.getPhotos(args.albumId,context)
         observePhotos()
         initEditText(context)
     }
+
+    private fun backStack() {
+        val onBackPressedCallback = object : OnBackPressedCallback(true /* enabled by default */) {
+            override fun handleOnBackPressed() {
+                // Handle back press here
+                // For example, navigate to a different destination or perform some action
+                findNavController().navigateUp()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
+    }
+
     private fun initEditText(context: Context?) {
         binding.searchEt.addTextChangedListener {
             if (it!!.isNotEmpty()){
