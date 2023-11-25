@@ -48,10 +48,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileFragmentView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = viewModel
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             albumsRv.adapter = adapter
         }
+
         observeUserData()
         observeAlbumList()
     }

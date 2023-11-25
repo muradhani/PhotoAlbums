@@ -41,6 +41,7 @@ class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, AlbumsFragmentViewMod
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         backStack()
+        binding.viewModel = viewModel
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             photosRv.adapter = adapter

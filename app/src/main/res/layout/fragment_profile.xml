@@ -37,27 +37,45 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:orientation="vertical"
                 tools:context=".ui.fragments.ProfileFragment">
-                <com.google.android.material.progressindicator.LinearProgressIndicator
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    showLoading="@{viewModel.albumList}"/>
-                <TextView
-                    android:id="@+id/user_name_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.user.toData().name}"
-                    android:textSize="@dimen/_20sdp"
-                    android:textStyle="bold"
-                    tools:text="test"/>
+                    android:id="@+id/user_constriant_layout">
 
-                <TextView
-                    android:id="@+id/user_address_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/_8sdp"
-                    android:text="@{viewModel.user.toData().address}"
-                    tools:text="test"
-                    android:textSize="@dimen/_15sdp" />
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"
+                        showLoading="@{viewModel.user}"/>
+                    <TextView
+                        android:id="@+id/user_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.user.toData().name}"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold"
+                        tools:text="test"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/user_address_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/_8sdp"
+                        android:text="@{viewModel.user.toData().address}"
+                        tools:text="test"
+                        android:textSize="@dimen/_15sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        app:layout_constraintTop_toBottomOf="@+id/user_name_tv"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -67,13 +85,31 @@
                     android:textSize="@dimen/_20sdp"
                     android:textStyle="bold" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/albums_rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/albums_rv_item"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        showLoading="@{viewModel.albumList}"
+                        android:visibility="gone"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/albums_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/albums_rv_item"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

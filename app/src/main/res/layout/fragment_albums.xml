@@ -5,7 +5,9 @@
     android:background="@color/white">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.example.useralbums.ui.viewmodels.AlbumsFragmentViewModel" />
     </data>
 
    <androidx.core.widget.NestedScrollView
@@ -44,15 +46,32 @@
                    android:drawablePadding="@dimen/_4sdp"
                    android:background="@drawable/edit_text_style"
                    android:paddingHorizontal="@dimen/_6sdp"/>
-               <androidx.recyclerview.widget.RecyclerView
-                   android:id="@+id/photos_rv"
+               <androidx.constraintlayout.widget.ConstraintLayout
                    android:layout_width="match_parent"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="@dimen/_10sdp"
-                   app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                   app:spanCount="3"
-                   android:orientation="vertical"
-                   tools:listitem="@layout/photos_rv_item"/>
+                   android:layout_height="wrap_content">
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"
+                        showLoading="@{viewModel.photos}"/>
+                   <androidx.recyclerview.widget.RecyclerView
+                       android:id="@+id/photos_rv"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical"
+                       app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                       app:layout_constraintBottom_toBottomOf="parent"
+                       app:layout_constraintEnd_toEndOf="parent"
+                       app:layout_constraintStart_toStartOf="parent"
+                       app:layout_constraintTop_toTopOf="parent"
+                       app:spanCount="3"
+                       tools:listitem="@layout/photos_rv_item" />
+               </androidx.constraintlayout.widget.ConstraintLayout>
+
            </LinearLayout>
        </RelativeLayout>
    </androidx.core.widget.NestedScrollView>
