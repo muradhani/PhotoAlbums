@@ -10,12 +10,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-@Module
-@InstallIn(SingletonComponent::class)
-object RepoModule {
-    @Provides
-    fun provideRepo(apiService: ApiService,mapper: UserMapper):MainRepo{
-        return MainRepoImpl(apiService,mapper)
-    }
-
-}
+//@Module
+//@InstallIn(SingletonComponent::class)
+//object RepoModule {
+//    @Provides
+//    fun provideRepo(apiService: ApiService,mapper: UserMapper):MainRepo{
+//        return MainRepoImpl(apiService,mapper)
+//    }
+//
+//}

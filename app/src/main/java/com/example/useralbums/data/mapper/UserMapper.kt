@@ -5,8 +5,8 @@ import com.example.useralbums.domain.mapper.Mapper
 import com.example.useralbums.domain.models.User
 import javax.inject.Inject
 
-class UserMapper @Inject constructor() : Mapper<UserResponseItem, User> {
+class UserMapper: Mapper<UserResponseItem, User> {
     override fun map(input: UserResponseItem): User {
-        return User(name = input.name, id = input.id, address = "${input.address}.${input.address.suite}.${input.address.city}.${input.address.zipcode}")
+        return User(name = input.name, id = input.id, address = "${input.address.street}.${input.address.suite}.${input.address.city}.${input.address.zipcode}")
     }
 }

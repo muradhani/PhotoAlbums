@@ -12,7 +12,10 @@ class AlbumsAdapter(
     private val albumListener: AlbumListener
 ):BaseAdapter<AlbumsRvItemBinding,AlbumsResponseItem>(list) {
     override fun bind(binding: AlbumsRvItemBinding, item: AlbumsResponseItem) {
-        binding.album = item.title
+        binding.name = item.title
+        binding.root.setOnClickListener {
+            albumListener.onAlbumClicked(item)
+        }
     }
 
     override fun getLayoutId(): Int {

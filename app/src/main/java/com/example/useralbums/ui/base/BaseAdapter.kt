@@ -13,22 +13,14 @@ import javax.inject.Inject
 
 abstract class BaseAdapter< DB : ViewDataBinding,T>(initialData: List<T>):
     RecyclerView.Adapter<BaseViewHolder<DB>>() {
-    private var _data: List<T> = initialData
-    var data: List<T>
-        get() = _data
-        set(value) {
-            val diffResult = DiffUtil.calculateDiff(BaseDiffCallback(_data, value))
-            _data = value
-            diffResult.dispatchUpdatesTo(this)
-        }
-//    var data: List<T> = emptyList()
+    private var data: List<T> = initialData
     var itemClickListener: OnItemClickListener<T>? = null
     abstract fun bind(binding: DB,item: T)
-//    fun setData(newData: List<T>) {
-//        val diffResult = DiffUtil.calculateDiff(BaseDiffCallback(data, newData))
-//        data = newData
-//        diffResult.dispatchUpdatesTo(this)
-//    }
+    fun setData(newData: List<T>) {
+        val diffResult = DiffUtil.calculateDiff(BaseDiffCallback(data, newData))
+        data = newData
+        diffResult.dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<DB> {
         val binding = DataBindingUtil.inflate<DB>(
@@ -43,10 +35,7 @@ abstract class BaseAdapter< DB : ViewDataBinding,T>(initialData: List<T>):
     override fun onBindViewHolder(holder: BaseViewHolder<DB>, position: Int) {
         val item = data[position]
         bind(holder.binding,item)
-        holder.itemView.setOnClickListener {
-            itemClickListener?.onItemClick(item)
 
-        }
     }
 
     override fun getItemCount(): Int {
@@ -70,8 +59,6 @@ abstract class BaseAdapter< DB : ViewDataBinding,T>(initialData: List<T>):
 interface OnItemClickListener<T> {
     fun onItemClick(item: T)
 }
-@FragmentScoped
-class BaseViewHolder<DB : ViewDataBinding> @Inject constructor(val binding: DB) :
+class BaseViewHolder<DB : ViewDataBinding>(val binding: DB) :
     RecyclerView.ViewHolder(binding.root) {
-   // abstract fun bind(item: T)
 }

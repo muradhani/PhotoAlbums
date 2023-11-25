@@ -1,6 +1,7 @@
 package com.example.useralbums.ui.viewmodels
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,11 +21,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-@HiltViewModel
-class ProfileFragmentViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase,
-    private val getAlbumUseCase: GetAlbumUseCase
-):ViewModel(),AlbumListener{
+
+class ProfileFragmentViewModel :ViewModel(){
+    private val getUserUseCase: GetUserUseCase = GetUserUseCase()
+    private val getAlbumUseCase: GetAlbumUseCase = GetAlbumUseCase()
     private val _albumsList = MutableLiveData<State<List<AlbumsResponseItem>>>()
     val albumList : LiveData<State<List<AlbumsResponseItem>>> = _albumsList
 
@@ -40,8 +40,10 @@ class ProfileFragmentViewModel @Inject constructor(
             withContext(Dispatchers.Main){
                 _user.postValue(it)
             }
-            Log.i("main",it.toData()!!.id.toString())
-            it.toData()?.let { it1 -> getAlbums(it1.id) }
+            if (it is State.Success){
+                Log.i("main",it.toData()!!.id.toString())
+                it.toData()?.let { it1 -> getAlbums(it1.id) }
+            }
         }
     }
     suspend fun getAlbums(userid:Int){
@@ -51,7 +53,5 @@ class ProfileFragmentViewModel @Inject constructor(
             }
         }
     }
-    override fun onAlbumClicked(album: AlbumsResponseItem) {
 
-    }
 }

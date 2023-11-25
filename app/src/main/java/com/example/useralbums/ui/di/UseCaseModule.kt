@@ -8,21 +8,21 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-
-@Module
-@InstallIn(SingletonComponent::class)
-object UseCaseModule {
-    @Provides
-    fun provideGetUserUseCase(repo : MainRepo):GetUserUseCase{
-        return GetUserUseCase(repo)
-    }
-    @Provides
-    fun provideGetPhotosUseCase(repo : MainRepo):GetPhotosUseCase{
-        return GetPhotosUseCase(repo)
-    }
-
-    @Provides
-    fun provideGetAlbumsUseCase(repo : MainRepo):GetAlbumUseCase{
-        return GetAlbumUseCase(repo)
-    }
-}
+//
+//@Module
+//@InstallIn(SingletonComponent::class)
+//object UseCaseModule {
+//    @Provides
+//    fun provideGetUserUseCase(repo : MainRepo):GetUserUseCase{
+//        return GetUserUseCase(repo)
+//    }
+//    @Provides
+//    fun provideGetPhotosUseCase(repo : MainRepo):GetPhotosUseCase{
+//        return GetPhotosUseCase(repo)
+//    }
+//
+//    @Provides
+//    fun provideGetAlbumsUseCase(repo : MainRepo):GetAlbumUseCase{
+//        return GetAlbumUseCase(repo)
+//    }
+//}

@@ -5,11 +5,6 @@
 
     <data>
         <variable
-            name="adapter"
-            type="com.example.useralbums.ui.adapter.AlbumsAdapter" />
-
-
-        <variable
             name="viewModel"
             type="com.example.useralbums.ui.viewmodels.ProfileFragmentViewModel" />
     </data>
@@ -42,7 +37,10 @@
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:orientation="vertical"
                 tools:context=".ui.fragments.ProfileFragment">
-
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    showLoading="@{viewModel.albumList}"/>
                 <TextView
                     android:id="@+id/user_name_tv"
                     android:layout_width="wrap_content"
@@ -56,6 +54,7 @@
                     android:id="@+id/user_address_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/_8sdp"
                     android:text="@{viewModel.user.toData().address}"
                     tools:text="test"
                     android:textSize="@dimen/_15sdp" />
@@ -71,11 +70,10 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/albums_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     tools:listitem="@layout/albums_rv_item"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    setAdapter="@{adapter}"
-                    submitList="@{viewModel.albumList.toData()}"/>
+                    />
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

@@ -1,25 +1,32 @@
 package com.example.useralbums.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.example.useralbums.R
+import com.example.useralbums.data.Dto.albums.AlbumsResponseItem
 import com.example.useralbums.databinding.FragmentAlbumsBinding
-import com.example.useralbums.databinding.FragmentProfileBinding
+import com.example.useralbums.domain.models.State
+import com.example.useralbums.ui.adapter.PhotoListener
+import com.example.useralbums.ui.adapter.PhotosAdapter
 import com.example.useralbums.ui.base.BaseFragment
-import com.example.useralbums.ui.viewmodels.ProfileFragmentViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.useralbums.ui.viewmodels.AlbumsFragmentViewModel
 
-@AndroidEntryPoint
-class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, ProfileFragmentViewModel>()  {
 
-    override fun createViewModel(): ProfileFragmentViewModel {
-        return ViewModelProvider(this).get(ProfileFragmentViewModel::class.java)
+class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, AlbumsFragmentViewModel>() ,PhotoListener{
+    val args:AlbumsFragmentArgs by navArgs()
+    private val adapter: PhotosAdapter by lazy { PhotosAdapter(emptyList(), this) }
+    override fun createViewModel(): AlbumsFragmentViewModel {
+        return ViewModelProvider(this).get(AlbumsFragmentViewModel::class.java)
     }
 
     override fun createBinding(
@@ -31,6 +38,36 @@ class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, ProfileFragmentViewMo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            photosRv.adapter = adapter
+            toolbar.title = args.albumName
+        }
+        Log.i("main",args.albumId.toString())
+        viewModel.getPhotos(args.albumId,context)
+        observePhotos()
+        initEditText(context)
+    }
+    private fun initEditText(context: Context?) {
+        binding.searchEt.addTextChangedListener {
+            if (it!!.isNotEmpty()){
+                viewModel.search(it.toString(),context)
+
+            }
+            else{
+                viewModel.getPhotos(args.albumId,context)
+            }
+        }
+    }
+    private fun observePhotos() {
+        viewModel.photos.observe(viewLifecycleOwner, Observer {
+            if (it is State.Success){
+                adapter.setData(it.data)
+            }
+        })
     }
 
+    override fun onPhotoClicked(album: AlbumsResponseItem) {
+
+    }
 }
