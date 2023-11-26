@@ -94,10 +94,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileFragmentView
         scope?.cancel()
     }
     override fun onAlbumClicked(album: AlbumsResponseItem) {
-//        val action = ProfileFragmentDirections.actionProfileFragmentToAlbumsFragment(album.id,album.title)
-//        Navigation.findNavController(requireView()).navigate(action)
         val action = ProfileFragmentDirections.actionProfileFragmentToAlbumsFragment(album.id,album.title)
-       // Navigation.findNavController(requireView()).enableOnBackPressed(true)
         Navigation.findNavController(requireView()).navigate(action)
     }
 }

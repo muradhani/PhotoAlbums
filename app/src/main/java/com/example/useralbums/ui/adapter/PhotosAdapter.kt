@@ -12,6 +12,9 @@ class PhotosAdapter(
     private val photoListener: PhotoListener
 ):BaseAdapter<PhotosRvItemBinding,PhotosResponseItem>(list) {
     override fun bind(binding: PhotosRvItemBinding, item: PhotosResponseItem) {
+        binding.root.setOnClickListener {
+            photoListener.onPhotoClicked(item)
+        }
        Glide.with(binding.root).load(item.thumbnailUrl).into(binding.tvImage)
     }
 
@@ -20,5 +23,5 @@ class PhotosAdapter(
     }
 }
 interface PhotoListener {
-    fun onPhotoClicked(album:AlbumsResponseItem)
+    fun onPhotoClicked(photo:PhotosResponseItem)
 }

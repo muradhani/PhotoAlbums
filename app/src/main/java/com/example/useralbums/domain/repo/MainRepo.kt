@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 interface MainRepo {
     suspend fun getUser(userid:Int): Flow<State<User>>
     suspend fun getAlbums(userid:Int): Flow<State<List<AlbumsResponseItem>>>
-    suspend fun getPhotos(albumId:Int,context: Context): Flow<State<List<PhotosResponseItem>>>
+    suspend fun getPhotos(albumId:Int): Flow<State<List<PhotosResponseItem>>>
 }

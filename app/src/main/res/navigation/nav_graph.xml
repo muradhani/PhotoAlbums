@@ -29,5 +29,17 @@
         <argument
             android:name="albumName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_albumsFragment_to_imageViewerFragment"
+            app:destination="@id/imageViewerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageViewerFragment"
+        android:name="com.example.useralbums.ImageViewerFragment"
+        android:label="fragment_image_viewer"
+        tools:layout="@layout/fragment_image_viewer" >
+        <argument
+            android:name="imageLink"
+            app:argType="string" />
     </fragment>
 </navigation>

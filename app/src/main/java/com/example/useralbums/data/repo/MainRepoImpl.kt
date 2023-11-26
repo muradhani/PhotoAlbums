@@ -52,19 +52,18 @@ class MainRepoImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPhotos(albumId: Int,context:Context): Flow<State<List<PhotosResponseItem>>> {
+    override suspend fun getPhotos(albumId: Int): Flow<State<List<PhotosResponseItem>>> {
         return flow {
-// Emit loading state
+
             emit(State.Loading)
-            //val photoDao : PhotoDao = AppDatabase.getInstance(context).photoDao()
+
             photoDao.deleteAll()
             try {
-                // 1. Fetch photos from the API
+
                 val response = apiService.getPhotos(albumId)
 
-                // 2. Check if the API call was successful
+
                 if (response.isSuccessful) {
-                    // 3. Cache the photos in the Room database
                     val photosFromApi = response.body()
                     photosFromApi?.let {
                         it.forEach{
@@ -72,33 +71,32 @@ class MainRepoImpl @Inject constructor(
                         }
                     }
 
-                    // 4. Emit success state with the cached photos
+
                     emit(State.Success(photoDao.getAll()))
                 } else {
-                    // 5. Emit error state with the error message
+
                     emit(State.Error("Error fetching photos from the API"))
                 }
 
             } catch (e: Exception) {
-                // 6. Emit error state with the exception message
+
                 emit(State.Error(e.message ?: "An error occurred"))
             }
         }
     }
-    suspend fun photosearch(title: String, context: Context?):Flow<State<List<PhotosResponseItem>>>{
+    suspend fun photosearch(title: String):Flow<State<List<PhotosResponseItem>>>{
         return flow {
-            // Emit loading state
-            //val photoDao : PhotoDao = AppDatabase.getInstance(context!!).photoDao()
+
             emit(State.Loading)
 
             try {
-                // 1. Perform the search in the Room database
+
                 val searchResult = photoDao.searchPhotos(title)
 
-                // 2. Emit success state with the search result
+
                 emit(State.Success(searchResult))
             } catch (e: Exception) {
-                // 3. Emit error state with the exception message
+
                 emit(State.Error(e.message ?: "An error occurred"))
             }
         }

@@ -9,6 +9,5 @@ class GetPhotosUseCase @Inject constructor(
     private val repo : MainRepoImpl
 ) {
 
-    suspend operator fun invoke(albumId: Int, context: Context?) =
-        context?.let { repo.getPhotos(albumId, it) }
+    suspend operator fun invoke(albumId: Int) =repo.getPhotos(albumId)
 }

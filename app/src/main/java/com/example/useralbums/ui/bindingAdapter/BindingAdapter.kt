@@ -10,23 +10,23 @@ import com.example.useralbums.domain.models.State
 import com.example.useralbums.ui.base.BaseAdapter
 
 
-@BindingAdapter("setAdapter")
-fun <DB : ViewDataBinding,T> setAdapter(
-    recyclerView: RecyclerView,
-    adapter: BaseAdapter<DB,T>?
-) {
-    adapter?.let {
-        recyclerView.adapter = it
-    }
-}
-
-@BindingAdapter("submitList")
-fun < T, DB : ViewDataBinding>submitList(recyclerView: RecyclerView, list: List<T>?) {
-    val adapter = recyclerView.adapter as BaseAdapter<DB,T >?
-    if (list != null) {
-        adapter?.setData(list)
-    }
-}
+//@BindingAdapter("setAdapter")
+//fun <DB : ViewDataBinding,T> setAdapter(
+//    recyclerView: RecyclerView,
+//    adapter: BaseAdapter<DB,T>?
+//) {
+//    adapter?.let {
+//        recyclerView.adapter = it
+//    }
+//}
+//
+//@BindingAdapter("submitList")
+//fun < T, DB : ViewDataBinding>submitList(recyclerView: RecyclerView, list: List<T>?) {
+//    val adapter = recyclerView.adapter as BaseAdapter<DB,T >?
+//    if (list != null) {
+//        adapter?.setData(list)
+//    }
+//}
 
 @BindingAdapter("setImage")
 fun setImage(imageView: ImageView, image: Int) {

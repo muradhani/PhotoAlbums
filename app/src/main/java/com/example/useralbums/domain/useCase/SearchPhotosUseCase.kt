@@ -7,5 +7,5 @@ class SearchPhotosUseCase @Inject constructor(
     private val repo : MainRepoImpl
 ) {
 
-    suspend operator fun invoke(Imagetitle: kotlin.String, context: android.content.Context?) = repo.photosearch(Imagetitle,context)
+    suspend operator fun invoke(Imagetitle: kotlin.String, ) = repo.photosearch(Imagetitle)
 }

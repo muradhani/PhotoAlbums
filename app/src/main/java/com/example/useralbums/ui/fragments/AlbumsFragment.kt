@@ -6,15 +6,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.useralbums.R
 import com.example.useralbums.data.Dto.albums.AlbumsResponseItem
+import com.example.useralbums.data.Dto.photos.PhotosResponseItem
 import com.example.useralbums.databinding.FragmentAlbumsBinding
 import com.example.useralbums.domain.models.State
 import com.example.useralbums.ui.adapter.PhotoListener
@@ -47,9 +50,9 @@ class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, AlbumsFragmentViewMod
             photosRv.adapter = adapter
             toolbar.title = args.albumName
         }
-        viewModel.getPhotos(args.albumId,context)
+        viewModel.getPhotos(args.albumId)
         observePhotos()
-        initEditText(context)
+        initEditText()
     }
 
     private fun backStack() {
@@ -64,26 +67,35 @@ class AlbumsFragment : BaseFragment<FragmentAlbumsBinding, AlbumsFragmentViewMod
 
     }
 
-    private fun initEditText(context: Context?) {
+    private fun initEditText() {
         binding.searchEt.addTextChangedListener {
             if (it!!.isNotEmpty()){
-                viewModel.search(it.toString(),context)
+                viewModel.search(it.toString())
 
             }
             else{
-                viewModel.getPhotos(args.albumId,context)
+                viewModel.getPhotos(args.albumId)
             }
         }
     }
     private fun observePhotos() {
-        viewModel.photos.observe(viewLifecycleOwner, Observer {
-            if (it is State.Success){
-                adapter.setData(it.data)
+        viewModel.photos.observe(viewLifecycleOwner, Observer { state ->
+            when (state) {
+                is State.Success -> {
+                    adapter.setData(state.data)
+                }
+                is State.Error -> {
+                    // Display a toast with the error message
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+
+                else -> {}
             }
         })
     }
 
-    override fun onPhotoClicked(album: AlbumsResponseItem) {
-
+    override fun onPhotoClicked(photo: PhotosResponseItem) {
+        val action = AlbumsFragmentDirections.actionAlbumsFragmentToImageViewerFragment(photo.thumbnailUrl)
+        Navigation.findNavController(requireView()).navigate(action)
     }
 }

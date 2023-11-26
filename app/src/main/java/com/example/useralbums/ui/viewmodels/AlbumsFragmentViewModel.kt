@@ -23,11 +23,11 @@ class AlbumsFragmentViewModel @Inject constructor(
     private val _photos = MutableLiveData<State<List<PhotosResponseItem>>>()
     val photos : LiveData<State<List<PhotosResponseItem>>> = _photos
 
-    fun getPhotos(albumId: Int, context: Context?){
+    fun getPhotos(albumId: Int){
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Call the GetPhotosUseCase to get photos from the repository
-                getPhotosUseCase.invoke(albumId, context)!!.collect{
+                getPhotosUseCase.invoke(albumId).collect{
                     Log.i("main",it.toData().toString())
                     _photos.postValue(it)
                 }
@@ -37,11 +37,11 @@ class AlbumsFragmentViewModel @Inject constructor(
             }
         }
     }
-    fun search(title: String, context: Context?){
+    fun search(title: String){
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 // Call the SearchPhotosUseCase to search for photos by title
-                val result = searchPhotosUseCase.invoke(title, context).collect{
+                val result = searchPhotosUseCase.invoke(title).collect{
                     if (it is State.Success){
                         _photos.postValue(it)
                     }
