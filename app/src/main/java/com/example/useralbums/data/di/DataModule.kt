@@ -5,8 +5,11 @@ import android.provider.ContactsContract.Contacts.Photo
 import androidx.room.Room
 import com.example.useralbums.data.local.AppDatabase
 import com.example.useralbums.data.local.PhotoDao
+import com.example.useralbums.data.mapper.UserMapper
 import com.example.useralbums.data.remote.ApiService
 import com.example.useralbums.data.remote.RetrofitClient
+import com.example.useralbums.data.repo.MainRepoImpl
+import com.example.useralbums.domain.repo.MainRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,4 +65,8 @@ object DataModule {
         ).build()
     }
 
+    @Provides
+    fun providerepo(apiService: ApiService , photoDao : PhotoDao, mapper: UserMapper):MainRepo{
+        return MainRepoImpl(apiService , photoDao, mapper)
+    }
 }

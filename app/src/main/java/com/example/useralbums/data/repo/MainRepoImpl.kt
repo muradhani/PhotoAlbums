@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class MainRepoImpl @Inject constructor(
+
+class MainRepoImpl (
     private val apiService: ApiService ,
     private val photoDao : PhotoDao,
     private val mapper: UserMapper
@@ -84,7 +84,7 @@ class MainRepoImpl @Inject constructor(
             }
         }
     }
-    suspend fun photosearch(title: String):Flow<State<List<PhotosResponseItem>>>{
+    override suspend fun photosearch(title: String):Flow<State<List<PhotosResponseItem>>>{
         return flow {
 
             emit(State.Loading)
